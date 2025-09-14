@@ -1,0 +1,475 @@
+/* Modern Tic Tac Toe Game - Enhanced Styling */
+
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1f2937;
+    --light-color: #f8fafc;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--gradient-primary);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    z-index: -1;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-30px) rotate(1deg); }
+    66% { transform: translateY(30px) rotate(-1deg); }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    border: none;
+    border-radius: 32px;
+    overflow: hidden;
+    background: var(--gradient-card);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-heavy);
+    border: 1px solid var(--glass-border);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.card-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    letter-spacing: -0.02em;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.game-board {
+    width: 320px;
+    height: 320px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
+    box-shadow: 
+        inset 0 2px 4px rgba(0,0,0,0.1),
+        0 8px 32px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-board::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 48%, rgba(99, 102, 241, 0.1) 50%, transparent 52%);
+    pointer-events: none;
+}
+
+.cell {
+    width: 100%;
+    height: 106px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 12px;
+    margin: 4px;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.cell:hover::before {
+    background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+    transform: scale(0.95);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.cell.x {
+    color: var(--danger-color);
+    text-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    animation: cellPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.cell.o {
+    color: var(--success-color);
+    text-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    animation: cellPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes cellPop {
+    0% { transform: scale(0) rotate(180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.cell.winning {
+    background: linear-gradient(145deg, #fef3c7, #fde68a);
+    animation: winningPulse 1s ease-in-out infinite;
+}
+
+.cell.winning::before {
+    background: linear-gradient(145deg, #fef3c7, #fde68a);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+@keyframes winningPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.score-board {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.score-item .badge {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-item .badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.score-item .badge:hover::before {
+    left: 100%;
+}
+
+#game-status {
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+}
+
+.btn {
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-header h1 {
+        font-size: 2rem;
+    }
+    
+    .game-board {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .cell {
+        height: 93px;
+        font-size: 2.5rem;
+    }
+    
+    .score-board {
+        gap: 1rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .game-board {
+        width: 260px;
+        height: 260px;
+    }
+    
+    .cell {
+        height: 86px;
+        font-size: 2.2rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 1.5rem;
+    }
+    
+    .card-header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Game over overlay effect */
+.game-over {
+    position: relative;
+}
+
+.game-over::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    z-index: 1;
+    backdrop-filter: blur(2px);
+}
+
+/* Enhanced animations */
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.9); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.card {
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cell {
+    animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Loading animation for cells */
+.cell.loading {
+    animation: cellLoading 1s ease-in-out infinite;
+}
+
+@keyframes cellLoading {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Success celebration */
+.celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    animation: confettiFall 3s linear infinite;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --glass-bg: rgba(0, 0, 0, 0.2);
+        --glass-border: rgba(255, 255, 255, 0.1);
+    }
+    
+    .card {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(20px);
+    }
+    
+    .game-board {
+        background: linear-gradient(145deg, #1f2937, #374151);
+    }
+    
+    .cell::before {
+        background: linear-gradient(145deg, #374151, #4b5563);
+    }
+    
+    .cell:hover::before {
+        background: linear-gradient(145deg, #4b5563, #6b7280);
+    }
+}
